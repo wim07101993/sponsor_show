@@ -1,16 +1,5 @@
-# sponsor_show
+# Sponsor Show
 
-A presenting application to show sponsors.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A presenting application to show sponsors. It creates a slide show based of a csv file which
+which indicates which sponsor has sponsored how many. Each sponsor slide is shown a time depending
+on the amount sponsored.
