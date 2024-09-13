@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sponsor_show/slide_show.dart';
 import 'package:sponsor_show/sponsor.dart';
@@ -18,6 +19,7 @@ class SponsorShowApp extends StatefulWidget {
 class _SponsorShowAppState extends State<SponsorShowApp> {
   final sponsors = ValueNotifier<List<Sponsor>>([]);
   final error = ValueNotifier<Object?>(null);
+  final focusNode = FocusNode()..requestFocus();
 
   @override
   void initState() {
@@ -62,33 +64,43 @@ class _SponsorShowAppState extends State<SponsorShowApp> {
     }
   }
 
+  void onKey(KeyEvent event) {
+    if (event.logicalKey == LogicalKeyboardKey.escape) {
+      exit(0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: ValueListenableBuilder(
-        valueListenable: error,
-        builder: (context, error, widget) {
-          if (error != null) {
-            return Text('Something went wrong: $error');
-          }
-          return ValueListenableBuilder(
-            valueListenable: sponsors,
-            builder: (context, sponsors, widget) {
-              if (sponsors.isEmpty) {
-                return Container();
-              }
-              return SlideShow(
-                slideScreenTime: (index) =>
-                    sponsors[index % sponsors.length].screenTime,
-                slideBuilder: (context, index) => SponsorSlide(
-                  name: sponsors[index % sponsors.length].name,
-                  image: sponsors[index % sponsors.length].image,
-                ),
-              );
-            },
-          );
-        },
+    return KeyboardListener(
+      focusNode: focusNode,
+      onKeyEvent: onKey,
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: ValueListenableBuilder(
+          valueListenable: error,
+          builder: (context, error, widget) {
+            if (error != null) {
+              return Text('Something went wrong: $error');
+            }
+            return ValueListenableBuilder(
+              valueListenable: sponsors,
+              builder: (context, sponsors, widget) {
+                if (sponsors.isEmpty) {
+                  return Container();
+                }
+                return SlideShow(
+                  slideScreenTime: (index) =>
+                      sponsors[index % sponsors.length].screenTime,
+                  slideBuilder: (context, index) => SponsorSlide(
+                    name: sponsors[index % sponsors.length].name,
+                    image: sponsors[index % sponsors.length].image,
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
