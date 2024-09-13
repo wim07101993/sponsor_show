@@ -5,11 +5,11 @@ class SlideShow extends StatefulWidget {
   const SlideShow({
     super.key,
     required this.slideBuilder,
-    required this.slideScreentime,
+    required this.slideScreenTime,
   });
 
   final Widget Function(BuildContext context, int index) slideBuilder;
-  final Duration Function(int index) slideScreentime;
+  final Duration Function(int index) slideScreenTime;
 
   @override
   State<SlideShow> createState() => _SlideShowState();
@@ -26,7 +26,7 @@ class _SlideShowState extends State<SlideShow> {
 
   Future loop() async {
     while (mounted) {
-      await Future.delayed(widget.slideScreentime(index.value));
+      await Future.delayed(widget.slideScreenTime(index.value));
       if (!mounted) {
         return;
       }

@@ -79,7 +79,7 @@ class _SponsorShowAppState extends State<SponsorShowApp> {
                 return Container();
               }
               return SlideShow(
-                slideScreentime: (index) =>
+                slideScreenTime: (index) =>
                     sponsors[index % sponsors.length].screenTime,
                 slideBuilder: (context, index) => SponsorSlide(
                   name: sponsors[index % sponsors.length].name,
